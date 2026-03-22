@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El inicio del universo</title>
+  <style>
+    :root {
+      --bg: #050816;
+      --panel: rgba(11, 18, 43, 0.78);
+      --panel-strong: rgba(16, 27, 63, 0.92);
+      --text: #e8ecff;
+      --muted: #a9b4e8;
+      --accent: #75e3ff;
+      --accent-2: #b085ff;
+      --line: rgba(117, 227, 255, 0.18);
+      --shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(176, 133, 255, 0.15), transparent 30%),
+        radial-gradient(circle at 20% 20%, rgba(117, 227, 255, 0.18), transparent 25%),
+        linear-gradient(180deg, #070b1b 0%, #04050f 100%);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.8) 0 1px, transparent 1.2px),
+        radial-gradient(circle, rgba(117, 227, 255, 0.55) 0 1px, transparent 1.4px);
+      background-size: 140px 140px, 220px 220px;
+      background-position: 0 0, 50px 80px;
+      opacity: 0.16;
+      pointer-events: none;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 1rem 0 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(16px);
+      background: rgba(5, 8, 22, 0.58);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0 0 1rem;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a,
+    .cta {
+      color: var(--text);
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 0.75rem 1rem;
+      border-radius: 999px;
+      transition: 0.25s ease;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .nav-links a:hover,
+    .cta:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(117, 227, 255, 0.15);
+    }
+
+    main {
+      padding-bottom: 4rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+      align-items: center;
+      min-height: calc(100vh - 84px);
+      padding: 4rem 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.85rem;
+      border: 1px solid rgba(117, 227, 255, 0.26);
+      border-radius: 999px;
+      color: var(--accent);
+      background: rgba(117, 227, 255, 0.06);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.1;
+      margin: 0 0 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5.4rem);
+      max-width: 12ch;
+    }
+
+    .hero p {
+      max-width: 62ch;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.75rem;
+    }
+
+    .cta.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #07101f;
+      font-weight: 700;
+      border: none;
+    }
+
+    .visual {
+      position: relative;
+      min-height: 460px;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at center, rgba(255, 188, 74, 0.95) 0 10%, rgba(176,133,255,0.65) 18%, rgba(117,227,255,0.12) 33%, rgba(5,8,22,0) 58%),
+        linear-gradient(180deg, rgba(117,227,255,0.06), rgba(176,133,255,0.08));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .visual::before,
+    .visual::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      inset: 12%;
+      border: 1px solid rgba(117, 227, 255, 0.18);
+      animation: pulse 8s infinite ease-in-out;
+    }
+
+    .visual::after {
+      inset: 25%;
+      animation-delay: -3s;
+      border-color: rgba(176, 133, 255, 0.2);
+    }
+
+    .info-badge {
+      position: absolute;
+      padding: 1rem 1.1rem;
+      border-radius: 18px;
+      background: rgba(8, 12, 32, 0.72);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      max-width: 220px;
+    }
+
+    .info-badge strong {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+
+    .badge-top {
+      top: 1.5rem;
+      right: 1.5rem;
+    }
+
+    .badge-bottom {
+      left: 1.5rem;
+      bottom: 1.5rem;
+    }
+
+    section {
+      padding: 1rem 0 3.5rem;
+    }
+
+    .section-heading {
+      max-width: 70ch;
+      margin-bottom: 1.6rem;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    .cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card,
+    .timeline-item,
+    .fact {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 1.4rem;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3,
+    .timeline-item h3,
+    .fact h3 {
+      font-size: 1.15rem;
+    }
+
+    .card p,
+    .timeline-item p,
+    .fact p,
+    li {
+      color: var(--muted);
+    }
+
+    .timeline {
+      position: relative;
+      gap: 1rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      bottom: 1rem;
+      width: 2px;
+      background: linear-gradient(var(--accent), transparent);
+      opacity: 0.5;
+    }
+
+    .timeline-item {
+      padding-left: 3rem;
+      position: relative;
+      background: var(--panel-strong);
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      width: 0.85rem;
+      height: 0.85rem;
+      border-radius: 50%;
+      left: 0.58rem;
+      top: 1.55rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 0 5px rgba(117, 227, 255, 0.12);
+    }
+
+    .facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 1rem 0 2rem;
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        transform: scale(1.06);
+        opacity: 0.35;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .cards,
+      .facts {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 2rem;
+      }
+
+      .visual {
+        min-height: 360px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        width: 100%;
+      }
+
+      .nav-links a,
+      .cta {
+        width: 100%;
+        text-align: center;
+      }
+
+      .info-badge {
+        position: static;
+        margin: 1rem;
+        max-width: none;
+      }
+
+      .visual {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="brand">Cosmos Origen</div>
+        <div class="nav-links">
+          <a href="#que-es">¿Qué pasó?</a>
+          <a href="#linea-tiempo">Línea del tiempo</a>
+          <a href="#claves">Ideas clave</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div>
+        <div class="eyebrow">✨ Un recorrido visual por el Big Bang</div>
+        <h1>¿Cómo comenzó el universo?</h1>
+        <p>
+          La teoría más aceptada indica que el universo surgió hace unos 13.800 millones de años a partir de un estado extremadamente caliente y denso. Desde entonces, el espacio se ha expandido, la materia se ha enfriado y han aparecido galaxias, estrellas y planetas.
+        </p>
+        <div class="hero-actions">
+          <a class="cta primary" href="#linea-tiempo">Explorar la historia</a>
+          <a class="cta" href="#claves">Ver ideas esenciales</a>
+        </div>
+      </div>
+
+      <div class="visual" aria-hidden="true">
+        <div class="info-badge badge-top">
+          <strong>Estado inicial</strong>
+          Temperatura inmensa, energía concentrada y una expansión rapidísima del espacio.
+        </div>
+        <div class="info-badge badge-bottom">
+          <strong>Resultado</strong>
+          Con el tiempo se formaron partículas, átomos, estrellas, galaxias y finalmente sistemas como el nuestro.
+        </div>
+      </div>
+    </section>
+
+    <section id="que-es" class="container">
+      <div class="section-heading">
+        <h2>¿Qué significa realmente “inicio del universo”?</h2>
+        <p>
+          No se trata de una explosión dentro de un espacio vacío, sino de la expansión del propio espacio. El modelo del Big Bang describe cómo evoluciona el universo desde sus primeras etapas observables, apoyado por evidencias como la expansión cósmica y la radiación de fondo de microondas.
+        </p>
+      </div>
+
+      <div class="grid cards">
+        <article class="card">
+          <h3>1. Una fase extrema</h3>
+          <p>
+            En los primeros instantes, el universo era increíblemente pequeño, caliente y denso. Las leyes de la física que usamos hoy todavía intentan describir por completo ese momento inicial.
+          </p>
+        </article>
+        <article class="card">
+          <h3>2. Expansión y enfriamiento</h3>
+          <p>
+            A medida que el universo se expandía, la temperatura bajó. Esto permitió que la energía se transformara en partículas y que más tarde se formaran protones, neutrones y electrones.
+          </p>
+        </article>
+        <article class="card">
+          <h3>3. Nacimiento de estructuras</h3>
+          <p>
+            Cientos de millones de años después aparecieron las primeras estrellas y galaxias. La gravedad organizó la materia y abrió el camino para la formación de sistemas planetarios.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="linea-tiempo" class="container">
+      <div class="section-heading">
+        <h2>Línea del tiempo del universo temprano</h2>
+        <p>
+          Esta secuencia resume los principales hitos desde los primeros instantes hasta la aparición de las primeras grandes estructuras cósmicas.
+        </p>
+      </div>
+
+      <div class="grid timeline">
+        <article class="timeline-item">
+          <h3>Primeras fracciones de segundo</h3>
+          <p>
+            Ocurrieron procesos muy rápidos: la expansión inicial, la separación de fuerzas fundamentales y la aparición de partículas elementales.
+          </p>
+        </article>
+        <article class="timeline-item">
+          <h3>Primeros minutos</h3>
+          <p>
+            Se formaron los núcleos de los elementos más ligeros, como el hidrógeno y el helio, en un proceso llamado nucleosíntesis primordial.
+          </p>
+        </article>
+        <article class="timeline-item">
+          <h3>380.000 años después</h3>
+          <p>
+            Los electrones se unieron a los núcleos y aparecieron los primeros átomos. La luz pudo viajar libremente y dejó una “huella” que hoy observamos como radiación cósmica de fondo.
+          </p>
+        </article>
+        <article class="timeline-item">
+          <h3>Cientos de millones de años después</h3>
+          <p>
+            Nacieron las primeras estrellas. Su luz comenzó a transformar el universo y dio inicio a la evolución química que produciría elementos más pesados.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="claves" class="container">
+      <div class="section-heading">
+        <h2>Cuatro ideas clave para entenderlo</h2>
+        <p>
+          Si quieres recordar lo esencial, quédate con estas ideas: explican por qué el universo actual todavía conserva rastros de su origen.
+        </p>
+      </div>
+
+      <div class="grid facts">
+        <article class="fact">
+          <h3>El universo sigue expandiéndose</h3>
+          <p>
+            Las galaxias lejanas muestran que el espacio continúa estirándose. Esta observación es una de las bases más fuertes del modelo cosmológico moderno.
+          </p>
+        </article>
+        <article class="fact">
+          <h3>La luz antigua aún existe</h3>
+          <p>
+            La radiación cósmica de fondo es una especie de eco del universo primitivo. Está presente en todas direcciones del cielo.
+          </p>
+        </article>
+        <article class="fact">
+          <h3>Los elementos ligeros encajan con la teoría</h3>
+          <p>
+            Las proporciones observadas de hidrógeno y helio coinciden con lo que predice la nucleosíntesis primordial en los primeros minutos del cosmos.
+          </p>
+        </article>
+        <article class="fact">
+          <h3>Aún quedan preguntas abiertas</h3>
+          <p>
+            La materia oscura, la energía oscura y la gravedad cuántica siguen siendo temas activos de investigación. Comprender el inicio del universo también implica reconocer lo que todavía no sabemos.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    <p>
+      Página educativa creada para explicar de forma clara y visual el origen del universo.
+    </p>
+  </footer>
+</body>
+</html>
